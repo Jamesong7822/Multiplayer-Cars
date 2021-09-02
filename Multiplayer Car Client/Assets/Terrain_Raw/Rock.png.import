@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/Rock.png-1fee500841e2feaeac6364d6d26238f3.image"
+
+[deps]
+
+source_file="res://Assets/Terrain_Raw/Rock.png"
+dest_files=[ "res://.import/Rock.png-1fee500841e2feaeac6364d6d26238f3.image" ]
+
+[params]
+

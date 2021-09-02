@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Particles/Smoke.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+gravity = Vector3( 0, 0, 0 )
+scale = 0.2
+scale_random = 0.1
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 6 )
+
+[sub_resource type="SphereMesh" id=2]
+
+[node name="Particles" type="Particles"]
+emitting = false
+amount = 25
+lifetime = 0.5
+local_coords = false
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 2 )
+script = ExtResource( 1 )

@@ -1,0 +1,52 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Cars/BaseCar.tscn" type="PackedScene" id=1]
+[ext_resource path="res://terrain_data/data.hterrain" type="Resource" id=2]
+[ext_resource path="res://Camera.gd" type="Script" id=3]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=4]
+[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=5]
+[ext_resource path="res://terrain_textures/TestWorld_slot0_albedo_bump.packed_tex" type="Texture" id=6]
+[ext_resource path="res://terrain_textures/TestWorld_slot1_albedo_bump.packed_tex" type="Texture" id=7]
+[ext_resource path="res://terrain_textures/TestWorld_slot1_normal_roughness.packed_tex" type="Texture" id=8]
+[ext_resource path="res://terrain_textures/TestWorld_slot0_normal_roughness.packed_tex" type="Texture" id=9]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 4 )
+mode = 0
+textures = [ [ ExtResource( 6 ), ExtResource( 7 ) ], [ ExtResource( 9 ), ExtResource( 8 ) ] ]
+
+[node name="TestWorld" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+current = true
+far = 1000.0
+script = ExtResource( 3 )
+targetPath = NodePath("../BaseCar")
+offset = Vector3( 0, 7, 6 )
+
+[node name="BaseCar" parent="." instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 19.9505, 31.4876, 49.2729 )
+acceleration = 65.0
+
+[node name="Ball" parent="BaseCar" index="0"]
+collision_layer = 2
+
+[node name="HTerrain" type="Spatial" parent="."]
+script = ExtResource( 5 )
+_terrain_data = ExtResource( 2 )
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource( 1 )
+render_layers = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
+
+[editable path="BaseCar"]
+[editable path="BaseCar/CarMesh/Car"]
