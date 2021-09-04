@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Decorative_Windmill.obj-658baca3c81e8292feee0a39d7060437.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Decorative_Windmill.obj-658baca3c81e8292feee0a39d7060437.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Decorative_Windmill.obj"
+dest_files=[ "res://.import/Prop_Decorative_Windmill.obj-658baca3c81e8292feee0a39d7060437.mesh", "res://.import/Prop_Decorative_Windmill.obj-658baca3c81e8292feee0a39d7060437.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

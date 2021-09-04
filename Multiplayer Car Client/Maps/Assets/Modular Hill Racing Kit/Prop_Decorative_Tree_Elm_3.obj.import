@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Decorative_Tree_Elm_3.obj-9a4220e790e4d758075d6f263c00b18b.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Decorative_Tree_Elm_3.obj-9a4220e790e4d758075d6f263c00b18b.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Decorative_Tree_Elm_3.obj"
+dest_files=[ "res://.import/Prop_Decorative_Tree_Elm_3.obj-9a4220e790e4d758075d6f263c00b18b.mesh", "res://.import/Prop_Decorative_Tree_Elm_3.obj-9a4220e790e4d758075d6f263c00b18b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

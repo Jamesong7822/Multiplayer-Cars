@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Decorative_Lighthouse.obj-9e5077228ad48d63dc9dc7227822d405.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Decorative_Lighthouse.obj-9e5077228ad48d63dc9dc7227822d405.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Decorative_Lighthouse.obj"
+dest_files=[ "res://.import/Prop_Decorative_Lighthouse.obj-9e5077228ad48d63dc9dc7227822d405.mesh", "res://.import/Prop_Decorative_Lighthouse.obj-9e5077228ad48d63dc9dc7227822d405.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Decorative_Hay_Pitchfork.obj-3efb4873062430a24f673ee724406a9b.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Decorative_Hay_Pitchfork.obj-3efb4873062430a24f673ee724406a9b.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Decorative_Hay_Pitchfork.obj"
+dest_files=[ "res://.import/Prop_Decorative_Hay_Pitchfork.obj-3efb4873062430a24f673ee724406a9b.mesh", "res://.import/Prop_Decorative_Hay_Pitchfork.obj-3efb4873062430a24f673ee724406a9b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

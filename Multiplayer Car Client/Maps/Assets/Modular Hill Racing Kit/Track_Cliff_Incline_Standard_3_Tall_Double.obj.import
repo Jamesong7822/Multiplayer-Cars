@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Cliff_Incline_Standard_3_Tall_Double.obj-6f1d4016d80c2bc86f28ddd46d67635c.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Cliff_Incline_Standard_3_Tall_Double.obj-6f1d4016d80c2bc86f28ddd46d67635c.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Cliff_Incline_Standard_3_Tall_Double.obj"
+dest_files=[ "res://.import/Track_Cliff_Incline_Standard_3_Tall_Double.obj-6f1d4016d80c2bc86f28ddd46d67635c.mesh", "res://.import/Track_Cliff_Incline_Standard_3_Tall_Double.obj-6f1d4016d80c2bc86f28ddd46d67635c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

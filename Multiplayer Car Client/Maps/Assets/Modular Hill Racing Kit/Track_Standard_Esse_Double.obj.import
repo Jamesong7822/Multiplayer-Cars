@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Standard_Esse_Double.obj-ee2a017718a72d34d138b31f7301abbe.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Standard_Esse_Double.obj-ee2a017718a72d34d138b31f7301abbe.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Standard_Esse_Double.obj"
+dest_files=[ "res://.import/Track_Standard_Esse_Double.obj-ee2a017718a72d34d138b31f7301abbe.mesh", "res://.import/Track_Standard_Esse_Double.obj-ee2a017718a72d34d138b31f7301abbe.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

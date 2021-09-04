@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Bridge_Curve_3x3_Piers.obj-888e9a16d01011f924145d26bf61a4bb.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Bridge_Curve_3x3_Piers.obj-888e9a16d01011f924145d26bf61a4bb.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Bridge_Curve_3x3_Piers.obj"
+dest_files=[ "res://.import/Track_Bridge_Curve_3x3_Piers.obj-888e9a16d01011f924145d26bf61a4bb.mesh", "res://.import/Track_Bridge_Curve_3x3_Piers.obj-888e9a16d01011f924145d26bf61a4bb.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

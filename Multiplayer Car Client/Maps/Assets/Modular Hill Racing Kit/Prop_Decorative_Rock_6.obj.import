@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Decorative_Rock_6.obj-0fb993dbe390e9f0b89c6924ed72a52c.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Decorative_Rock_6.obj-0fb993dbe390e9f0b89c6924ed72a52c.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Decorative_Rock_6.obj"
+dest_files=[ "res://.import/Prop_Decorative_Rock_6.obj-0fb993dbe390e9f0b89c6924ed72a52c.mesh", "res://.import/Prop_Decorative_Rock_6.obj-0fb993dbe390e9f0b89c6924ed72a52c.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

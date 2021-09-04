@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Track_Ramp_Support.obj-f70de207c3cfbfb3ba21088c7b826458.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Track_Ramp_Support.obj-f70de207c3cfbfb3ba21088c7b826458.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Track_Ramp_Support.obj"
+dest_files=[ "res://.import/Prop_Track_Ramp_Support.obj-f70de207c3cfbfb3ba21088c7b826458.mesh", "res://.import/Prop_Track_Ramp_Support.obj-f70de207c3cfbfb3ba21088c7b826458.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Standard_Finish_Line_Double_Checkered.obj-4c081ec173afa34a7ee9f5dd543a925b.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Standard_Finish_Line_Double_Checkered.obj-4c081ec173afa34a7ee9f5dd543a925b.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Standard_Finish_Line_Double_Checkered.obj"
+dest_files=[ "res://.import/Track_Standard_Finish_Line_Double_Checkered.obj-4c081ec173afa34a7ee9f5dd543a925b.mesh", "res://.import/Track_Standard_Finish_Line_Double_Checkered.obj-4c081ec173afa34a7ee9f5dd543a925b.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

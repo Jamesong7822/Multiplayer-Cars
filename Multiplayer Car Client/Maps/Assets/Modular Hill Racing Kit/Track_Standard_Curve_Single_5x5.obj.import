@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Standard_Curve_Single_5x5.obj-4bb8e1e6bf4c5e05cf287885a4e33009.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Standard_Curve_Single_5x5.obj-4bb8e1e6bf4c5e05cf287885a4e33009.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Standard_Curve_Single_5x5.obj"
+dest_files=[ "res://.import/Track_Standard_Curve_Single_5x5.obj-4bb8e1e6bf4c5e05cf287885a4e33009.mesh", "res://.import/Track_Standard_Curve_Single_5x5.obj-4bb8e1e6bf4c5e05cf287885a4e33009.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

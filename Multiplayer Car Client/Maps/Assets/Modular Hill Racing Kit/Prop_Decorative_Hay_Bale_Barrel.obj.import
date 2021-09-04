@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Decorative_Hay_Bale_Barrel.obj-5b0ed94a98dffe824332e4ba8e9cb396.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Decorative_Hay_Bale_Barrel.obj-5b0ed94a98dffe824332e4ba8e9cb396.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Decorative_Hay_Bale_Barrel.obj"
+dest_files=[ "res://.import/Prop_Decorative_Hay_Bale_Barrel.obj-5b0ed94a98dffe824332e4ba8e9cb396.mesh", "res://.import/Prop_Decorative_Hay_Bale_Barrel.obj-5b0ed94a98dffe824332e4ba8e9cb396.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

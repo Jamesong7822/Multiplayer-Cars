@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Terrain_Cliff_Middle_Side.obj-4baa50ff0662398588dcb8c508aaeec1.mesh"
+
+[deps]
+
+files=[ "res://.import/Terrain_Cliff_Middle_Side.obj-4baa50ff0662398588dcb8c508aaeec1.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Terrain_Cliff_Middle_Side.obj"
+dest_files=[ "res://.import/Terrain_Cliff_Middle_Side.obj-4baa50ff0662398588dcb8c508aaeec1.mesh", "res://.import/Terrain_Cliff_Middle_Side.obj-4baa50ff0662398588dcb8c508aaeec1.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

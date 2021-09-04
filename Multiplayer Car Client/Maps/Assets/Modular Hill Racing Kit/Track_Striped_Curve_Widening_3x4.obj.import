@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Striped_Curve_Widening_3x4.obj-2bdd034daffe6d5b2b8ed79314acaed8.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Striped_Curve_Widening_3x4.obj-2bdd034daffe6d5b2b8ed79314acaed8.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Striped_Curve_Widening_3x4.obj"
+dest_files=[ "res://.import/Track_Striped_Curve_Widening_3x4.obj-2bdd034daffe6d5b2b8ed79314acaed8.mesh", "res://.import/Track_Striped_Curve_Widening_3x4.obj-2bdd034daffe6d5b2b8ed79314acaed8.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

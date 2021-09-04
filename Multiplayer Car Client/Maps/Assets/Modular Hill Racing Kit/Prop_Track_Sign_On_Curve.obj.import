@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Track_Sign_On_Curve.obj-093b2e2887cd5d035b53b5e4919effc4.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Track_Sign_On_Curve.obj-093b2e2887cd5d035b53b5e4919effc4.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Track_Sign_On_Curve.obj"
+dest_files=[ "res://.import/Prop_Track_Sign_On_Curve.obj-093b2e2887cd5d035b53b5e4919effc4.mesh", "res://.import/Prop_Track_Sign_On_Curve.obj-093b2e2887cd5d035b53b5e4919effc4.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

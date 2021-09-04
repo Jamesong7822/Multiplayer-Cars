@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Decorative_Fence_Curve_3x3.obj-44b58751db1f3521f0d25ca1a63ec68a.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Decorative_Fence_Curve_3x3.obj-44b58751db1f3521f0d25ca1a63ec68a.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Decorative_Fence_Curve_3x3.obj"
+dest_files=[ "res://.import/Prop_Decorative_Fence_Curve_3x3.obj-44b58751db1f3521f0d25ca1a63ec68a.mesh", "res://.import/Prop_Decorative_Fence_Curve_3x3.obj-44b58751db1f3521f0d25ca1a63ec68a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

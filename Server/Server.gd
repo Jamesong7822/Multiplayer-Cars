@@ -3,6 +3,9 @@ extends Node
 const TIMEOUT = 1000 # Unresponsive clients times out after 1 sec
 const SEAL_TIME = 10000 # A sealed room will be closed after this time
 const ALFNUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+const PORT = 9080
+
+export (int) var lobbyLength = 5
 
 var _alfnum = ALFNUM.to_ascii()
 
@@ -77,7 +80,15 @@ func _init():
 	server.connect("data_received", self, "_on_data")
 	server.connect("client_connected", self, "_peer_connected")
 	server.connect("client_disconnected", self, "_peer_disconnected")
-	print ("Server Started")
+	_startServer()
+	
+func _startServer():
+	var err = server.listen(PORT)
+	if err != OK:
+		print("Unable to start server")
+		set_process(false)
+	else:
+		print ("Server Started!")
 
 func _process(delta):
 	poll()
@@ -126,7 +137,7 @@ func _peer_disconnected(id : int, was_clean : bool = false):
 
 func _join_lobby(peer, lobby : String) -> bool:
 	if lobby == "":
-		for i in range(0, 32):
+		for i in range(0, lobbyLength):
 			lobby += char(_alfnum[rand.randi_range(0, ALFNUM.length()-1)])
 		lobbies[lobby] = Lobby.new(peer.id)
 	elif not lobbies.has(lobby):

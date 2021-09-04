@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Bridge_Incline_Gentle_Flat_Floating.obj-dd726640f19a6fd53dd7488be9ac4b12.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Bridge_Incline_Gentle_Flat_Floating.obj-dd726640f19a6fd53dd7488be9ac4b12.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Bridge_Incline_Gentle_Flat_Floating.obj"
+dest_files=[ "res://.import/Track_Bridge_Incline_Gentle_Flat_Floating.obj-dd726640f19a6fd53dd7488be9ac4b12.mesh", "res://.import/Track_Bridge_Incline_Gentle_Flat_Floating.obj-dd726640f19a6fd53dd7488be9ac4b12.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

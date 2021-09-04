@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Cliff_Edge_Striped_3_Tall_Single.obj-7497cd79b6625929b07e75926a395daf.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Cliff_Edge_Striped_3_Tall_Single.obj-7497cd79b6625929b07e75926a395daf.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Cliff_Edge_Striped_3_Tall_Single.obj"
+dest_files=[ "res://.import/Track_Cliff_Edge_Striped_3_Tall_Single.obj-7497cd79b6625929b07e75926a395daf.mesh", "res://.import/Track_Cliff_Edge_Striped_3_Tall_Single.obj-7497cd79b6625929b07e75926a395daf.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

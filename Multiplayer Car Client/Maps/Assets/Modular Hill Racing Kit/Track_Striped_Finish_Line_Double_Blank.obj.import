@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Track_Striped_Finish_Line_Double_Blank.obj-14aa01fed90a00e195ef1275d7c1ef18.mesh"
+
+[deps]
+
+files=[ "res://.import/Track_Striped_Finish_Line_Double_Blank.obj-14aa01fed90a00e195ef1275d7c1ef18.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Track_Striped_Finish_Line_Double_Blank.obj"
+dest_files=[ "res://.import/Track_Striped_Finish_Line_Double_Blank.obj-14aa01fed90a00e195ef1275d7c1ef18.mesh", "res://.import/Track_Striped_Finish_Line_Double_Blank.obj-14aa01fed90a00e195ef1275d7c1ef18.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

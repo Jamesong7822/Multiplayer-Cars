@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Terrain_Water_Flat_Circle.obj-5dee9cce77b4c1f0acc26962d4fb0dc9.mesh"
+
+[deps]
+
+files=[ "res://.import/Terrain_Water_Flat_Circle.obj-5dee9cce77b4c1f0acc26962d4fb0dc9.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Terrain_Water_Flat_Circle.obj"
+dest_files=[ "res://.import/Terrain_Water_Flat_Circle.obj-5dee9cce77b4c1f0acc26962d4fb0dc9.mesh", "res://.import/Terrain_Water_Flat_Circle.obj-5dee9cce77b4c1f0acc26962d4fb0dc9.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

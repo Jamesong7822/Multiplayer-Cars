@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Prop_Obstacle_Hammer_Housing_Double.obj-64ca79e2a21a985e51d9b755401793ef.mesh"
+
+[deps]
+
+files=[ "res://.import/Prop_Obstacle_Hammer_Housing_Double.obj-64ca79e2a21a985e51d9b755401793ef.mesh" ]
+
+source_file="res://Maps/Assets/Modular Hill Racing Kit/Prop_Obstacle_Hammer_Housing_Double.obj"
+dest_files=[ "res://.import/Prop_Obstacle_Hammer_Housing_Double.obj-64ca79e2a21a985e51d9b755401793ef.mesh", "res://.import/Prop_Obstacle_Hammer_Housing_Double.obj-64ca79e2a21a985e51d9b755401793ef.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
