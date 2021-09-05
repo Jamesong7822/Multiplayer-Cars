@@ -35,7 +35,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	ball.add_central_force(-carMesh.global_transform.basis.z * speedInput)
 	# update car mesh position
-	carMesh.global_transform.origin = ball.global_transform.origin + sphereOffset
+	var newCarMeshPos = ball.global_transform.origin +sphereOffset
+	newCarMeshPos.y = lerp(carMesh.global_transform.origin.y, newCarMeshPos.y, 0.5)
+	carMesh.global_transform.origin = newCarMeshPos
 	if isHost:
 		# respawn if necessary
 		if ball.global_transform.origin.y < - 50:
@@ -45,8 +47,6 @@ func _physics_process(delta: float) -> void:
 	
 	
 func _process(delta: float) -> void:
-	
-	
 	# check if network master
 	if is_network_master():
 		# cannot steer / drive when in air
@@ -62,6 +62,9 @@ func _process(delta: float) -> void:
 		rotateInput += Input.get_action_strength("steer_left")
 		rotateInput -= Input.get_action_strength("steer_right")
 		rotateInput *= deg2rad(steering)
+		# change rotateinput to -ve for reversing
+		if speedInput < 0:
+			rotateInput = -rotateInput
 		# check for respawn input
 		respawnInput = false
 		if Input.is_action_just_pressed("respawn"):
@@ -83,19 +86,19 @@ func _process(delta: float) -> void:
 	# rotate wheels for effect
 	rightWheel.rotation.y = rotateInput
 	leftWheel.rotation.y = rotateInput
-	if isHost:
-		# rotate car mesh
-		if ball.linear_velocity.length() > turnStopLimit:
-			var newBasis = carMesh.global_transform.basis.rotated(carMesh.global_transform.basis.y, rotateInput)
-			carMesh.global_transform.basis = carMesh.global_transform.basis.slerp(newBasis, turnSpeed*delta)
-			carMesh.global_transform = carMesh.global_transform.orthonormalized()
-			# body tilt
-			var t = -rotateInput * ball.linear_velocity.length() / bodyTilt
-			carBodyMesh.rotation.z = lerp(carBodyMesh.rotation.z, t, 10 * delta)
-		# align to slope
-		var n = groundRaycast.get_collision_normal()
-		var xform = alignWithY(carMesh.global_transform, n.normalized())
-		carMesh.global_transform = carMesh.global_transform.interpolate_with(xform, 10*delta)
+	# rotate car mesh
+	#if isHost:
+	if ball.linear_velocity.length() > turnStopLimit:
+		var newBasis = carMesh.global_transform.basis.rotated(carMesh.global_transform.basis.y, rotateInput)
+		carMesh.global_transform.basis = carMesh.global_transform.basis.slerp(newBasis, turnSpeed*delta)
+		carMesh.global_transform = carMesh.global_transform.orthonormalized()
+		# body tilt
+		var t = -rotateInput * ball.linear_velocity.length() / bodyTilt
+		carBodyMesh.rotation.z = lerp(carBodyMesh.rotation.z, t, 10 * delta)
+	# align to slope
+	var n = groundRaycast.get_collision_normal()
+	var xform = alignWithY(carMesh.global_transform, n.normalized())
+	carMesh.global_transform = carMesh.global_transform.interpolate_with(xform, 10*delta)
 	
 func alignWithY(xform:Transform, newY:Vector3):
 	xform.basis.y = newY
@@ -105,10 +108,14 @@ func alignWithY(xform:Transform, newY:Vector3):
 	
 func set_player_name(playerName: String) -> void:
 	pass
+	$"CarMesh/3DLabel"._setLabelText(playerName)
 	
 func _respawn() -> void:
 	ball.global_transform.origin = global_transform.origin
 	carMesh.global_transform = carMeshOriginalTransform
+	
+func _boost(boostDir: Vector3, boostAmount: float) -> void:
+	ball.add_central_force(boostDir * boostAmount)
 		
 remote func sendInputToHost(clientSpeedInput: float, clientRotateInput: float, clientRespawnInput: bool) -> void:
 	pass
@@ -121,7 +128,7 @@ remote func sendTransformToClients(ballGlobalTransform: Transform, carMeshGlobal
 	if get_tree().get_rpc_sender_id() != 1:
 		return
 	# update the corresponding transform on client side
-	ball.global_transform = ballGlobalTransform
-	carMesh.global_transform = carMesh.global_transform.interpolate_with(carMeshGlobalTransform, 0.1)
-
+	ball.global_transform = ball.global_transform.interpolate_with(ballGlobalTransform, 0.9)
+	#carMesh.global_transform = carMesh.global_transform.interpolate_with(carMeshGlobalTransform, 0.5)
+	print (ballGlobalTransform.origin)
 

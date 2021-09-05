@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Maps/Map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Audio/BGM.mp3" type="AudioStream" id=2]
 [ext_resource path="res://Camera.gd" type="Script" id=3]
+[ext_resource path="res://Maps/Interactables/BoostPad.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI/Debugger.tscn" type="PackedScene" id=5]
+
+[sub_resource type="ProceduralSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+fog_enabled = true
+fog_depth_end = 300.0
+tonemap_mode = 2
+ssao_enabled = true
 
 [node name="TestWorld" type="Spatial" groups=[
 "World",
@@ -30,3 +42,22 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.96662, 1, -6.35331 )
 stream = ExtResource( 2 )
 volume_db = -15.0
 autoplay = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="BoostPads" type="Spatial" parent="."]
+
+[node name="BoostPad" parent="BoostPads" instance=ExtResource( 4 )]
+transform = Transform( -8.74228e-08, 0, -1, 0, 1, 0, 2, 0, -4.37114e-08, 301.445, 39.8894, -11.5361 )
+
+[node name="BoostPad2" parent="BoostPads" instance=ExtResource( 4 )]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 1, 428.566, -7.27779, 139.211 )
+
+[node name="BoostPad3" parent="BoostPads" instance=ExtResource( 4 )]
+transform = Transform( 0.0500562, 0.282599, -0.958911, 0.0768641, 0.958231, 0.283401, 1.99789, -0.0439459, 0.0131219, 395.45, 15.7223, 178.414 )
+
+[node name="BoostPad4" parent="BoostPads" instance=ExtResource( 4 )]
+transform = Transform( -1.62762, 0.212373, -0.540931, -0.0335033, 0.921871, 0.387135, 1.16177, 0.324117, -0.746673, 362.689, 32.5192, 163.932 )
+
+[node name="Debugger" parent="." instance=ExtResource( 5 )]

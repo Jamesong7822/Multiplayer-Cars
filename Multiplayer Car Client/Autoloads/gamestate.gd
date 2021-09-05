@@ -15,6 +15,8 @@ var player_name = "The Warrior"
 # Names for remote players in id:name format
 var players = {}
 
+var RTT = 0
+
 # Signals to let lobby GUI know what's going on
 signal player_list_changed()
 signal connection_failed()
@@ -186,7 +188,22 @@ func end_game():
 		get_node("/root/Lobby").queue_free()
 	# push client back to main menu
 	get_tree().change_scene("res://Menus/MainMenu.tscn")
-
+	
+func _getLatency():
+	if get_tree().get_network_unique_id() == 1:
+		return 0
+	else:
+		rpc_id(1, "_sendPing", OS.get_system_time_msecs())
+		
+remote func _sendPing(sendTime: int) -> void:
+	var senderID = get_tree().get_rpc_sender_id()
+	rpc_id(senderID, "_returnPing", sendTime)
+	
+remote func _returnPing(sendTime: int) -> void:
+	if get_tree().get_rpc_sender_id() != 1:
+		return
+	RTT = (OS.get_system_time_msecs() - sendTime) / 2 # round trip time
+		
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self,"_player_disconnected")
