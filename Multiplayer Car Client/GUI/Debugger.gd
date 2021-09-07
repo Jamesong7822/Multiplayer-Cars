@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+export (float) var updateRate = 0.1
+
 var FPS = 0
 var drawCalls = 0
 
@@ -8,7 +10,7 @@ var updateTimer
 func _ready() -> void:
 	updateTimer = Timer.new()
 	add_child(updateTimer)
-	updateTimer.wait_time = 1
+	updateTimer.wait_time = updateRate
 	updateTimer.connect("timeout", self, "_on_UpdateTimer_Timeout")
 	updateTimer.start()
 	getDebugInfo()

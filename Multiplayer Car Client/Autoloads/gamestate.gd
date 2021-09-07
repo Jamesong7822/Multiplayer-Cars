@@ -88,11 +88,12 @@ remote func pre_start_game(spawn_points):
 	var player_scene = load("res://Cars/BaseCar.tscn")
 
 	for p_id in spawn_points:
-		var spawn_pos = world.get_node("SpawnPos/" + str(spawn_points[p_id])).translation
+		var spawn_pos = world.get_node("SpawnPos/" + str(spawn_points[p_id]))
 		var player = player_scene.instance()
 
 		player.set_name(str(p_id)) # Use unique ID as node name
-		player.translation=spawn_pos
+		player.translation=spawn_pos.translation
+		player.rotation_degrees = spawn_pos.rotation_degrees
 		player.set_network_master(p_id) #set unique id as master
 
 		if p_id == get_tree().get_network_unique_id():

@@ -7,7 +7,6 @@ onready var carBodyMesh = $CarMesh/Car/tmpParent.get_child(0).get_node("body")
 onready var rightWheel = $CarMesh/Car/tmpParent.get_child(0).get_node("wheel_frontRight")
 onready var leftWheel = $CarMesh/Car/tmpParent.get_child(0).get_node("wheel_frontLeft")
 
-
 export (float) var acceleration = 50.0
 export (float) var steering = 20.0
 export (float) var turnSpeed = 5.0
@@ -18,19 +17,15 @@ var sphereOffset : Vector3 = Vector3(0,-1.0,0)
 var speedInput = 0.0
 var rotateInput = 0.0
 var respawnInput = false
+var jumpInput = false
 var carMeshOriginalTransform
-
-var isHost = false
 
 func _ready() -> void:
 	pass
 	carMeshOriginalTransform = carMesh.global_transform
-	if get_tree().get_network_unique_id() == 1:
-		isHost = true
-	if not isHost:
-		# disable the physics for clients
+	if name != str(get_tree().get_network_unique_id()):
+		# disable the physics for car that is not urs
 		$Ball.mode = RigidBody.MODE_KINEMATIC
-		
 
 func _physics_process(delta: float) -> void:
 	ball.add_central_force(-carMesh.global_transform.basis.z * speedInput)
@@ -38,15 +33,16 @@ func _physics_process(delta: float) -> void:
 	var newCarMeshPos = ball.global_transform.origin +sphereOffset
 	newCarMeshPos.y = lerp(carMesh.global_transform.origin.y, newCarMeshPos.y, 0.5)
 	carMesh.global_transform.origin = newCarMeshPos
-	if isHost:
-		# respawn if necessary
-		if ball.global_transform.origin.y < - 50:
-			_respawn()
+	# respawn if necessary
+	if ball.global_transform.origin.y < - 50:
+		_respawn()
+	# broadcast your own transform to other connected peers
+	if name == str(get_tree().get_network_unique_id()):
 		for playerID in get_tree().get_network_connected_peers():
 			rpc_id(playerID, "sendTransformToClients", ball.global_transform, carMesh.global_transform)
-	
-	
+
 func _process(delta: float) -> void:
+	_renderSmokeParticles()
 	# check if network master
 	if is_network_master():
 		# cannot steer / drive when in air
@@ -69,25 +65,21 @@ func _process(delta: float) -> void:
 		respawnInput = false
 		if Input.is_action_just_pressed("respawn"):
 			respawnInput = true
-		# inform host
-		if not isHost:
-			rpc_id(1, "sendInputToHost", speedInput, rotateInput, respawnInput)
-	# check respawnInput
+		
+		# check for jump input
+		jumpInput = false
+		if Input.is_action_just_pressed("space"):
+			jumpInput = true
+
 	if respawnInput:
 		_respawn()
+	if jumpInput:
+		_jump()
 	
-	# add smoke effect
-	if rotateInput != 0:
-		$CarMesh/Particles._setEmit(true)
-		$CarMesh/Particles2._setEmit(true)
-	else:
-		$CarMesh/Particles._setEmit(false)
-		$CarMesh/Particles2._setEmit(false)
 	# rotate wheels for effect
 	rightWheel.rotation.y = rotateInput
 	leftWheel.rotation.y = rotateInput
 	# rotate car mesh
-	#if isHost:
 	if ball.linear_velocity.length() > turnStopLimit:
 		var newBasis = carMesh.global_transform.basis.rotated(carMesh.global_transform.basis.y, rotateInput)
 		carMesh.global_transform.basis = carMesh.global_transform.basis.slerp(newBasis, turnSpeed*delta)
@@ -110,25 +102,28 @@ func set_player_name(playerName: String) -> void:
 	pass
 	$"CarMesh/3DLabel"._setLabelText(playerName)
 	
+func _renderSmokeParticles() -> void:
+	# add smoke effect
+	var emit = false
+	if rotateInput != 0 and speedInput != 0 and groundRaycast.is_colliding():
+		emit = true
+	$CarMesh/Particles._setEmit(emit)
+	$CarMesh/Particles2._setEmit(emit)
+	
 func _respawn() -> void:
+	ball.linear_velocity = Vector3.ZERO
 	ball.global_transform.origin = global_transform.origin
 	carMesh.global_transform = carMeshOriginalTransform
 	
+func _jump() -> void:
+	ball.add_central_force(Vector3.UP * 1500)
+	ball.linear_velocity = ball.linear_velocity * 0.7
+	
 func _boost(boostDir: Vector3, boostAmount: float) -> void:
 	ball.add_central_force(boostDir * boostAmount)
-		
-remote func sendInputToHost(clientSpeedInput: float, clientRotateInput: float, clientRespawnInput: bool) -> void:
-	pass
-	# update the corresponding variables on host side
-	speedInput = clientSpeedInput
-	rotateInput = clientRotateInput
-	respawnInput = clientRespawnInput
 
 remote func sendTransformToClients(ballGlobalTransform: Transform, carMeshGlobalTransform: Transform) -> void:
-	if get_tree().get_rpc_sender_id() != 1:
-		return
 	# update the corresponding transform on client side
-	ball.global_transform = ball.global_transform.interpolate_with(ballGlobalTransform, 0.9)
-	#carMesh.global_transform = carMesh.global_transform.interpolate_with(carMeshGlobalTransform, 0.5)
-	print (ballGlobalTransform.origin)
+	ball.global_transform = ball.global_transform.interpolate_with(ballGlobalTransform, 0.2)
+	carMesh.global_transform = carMesh.global_transform.interpolate_with(carMeshGlobalTransform, 0.2)
 
