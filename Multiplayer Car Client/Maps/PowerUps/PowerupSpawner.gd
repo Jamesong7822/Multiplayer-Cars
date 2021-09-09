@@ -3,6 +3,7 @@ extends Spatial
 export (float) var spawnTimer = 3.0
 
 var availablePowerups
+var spawnAtPos
 
 func _getPowerUpsInArea() -> Array:
 	return $Area.get_overlapping_areas()
@@ -33,9 +34,11 @@ func _ready() -> void:
 	_setup()
 	yield(get_tree(), "idle_frame")
 	# spawn the first powerup
+	if $RayCast.is_colliding():
+		spawnAtPos = $RayCast.get_collision_point() + Vector3(0, 1, 0)
 	if get_tree().is_network_server():
 		var powerUpScene = _getRandomPowerUpScene()
-		rpc("_spawnPowerup", powerUpScene)
+		rpc("_spawnPowerup", powerUpScene, spawnAtPos)
 	
 func _on_SpawnArea_area_exited(area: Area) -> void:
 	pass # Replace with function body.
@@ -53,18 +56,17 @@ func _onPowerUpCollected() -> void:
 func _on_SpawnTimer_timeout() -> void:
 	pass # Replace with function body.
 	var powerUpScene = _getRandomPowerUpScene()
-	rpc("_spawnPowerup", powerUpScene)
+	rpc("_spawnPowerup", powerUpScene, spawnAtPos)
 	
 func _getRandomPowerUpScene() -> String:
 	if get_tree().get_network_unique_id() == 1:
 		return availablePowerups[randi() % len(availablePowerups)]
 	return ""
 	
-remotesync func _spawnPowerup(powerUpScene: String) -> void:
+remotesync func _spawnPowerup(powerUpScene: String, spawnPos: Vector3) -> void:
 	print ("spawn power up: %s"%powerUpScene)
 	# get random powerup
 	var a = load(powerUpScene).instance()
 	add_child(a)
 	a.connect("collected", self, "_onPowerUpCollected")
-	if $RayCast.is_colliding():
-		a.global_transform.origin = $RayCast.get_collision_point() + Vector3(0, 1, 0)
+	a.global_transform.origin = spawnPos

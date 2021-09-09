@@ -28,8 +28,20 @@ func _spawnBalls(powerUpEffect: Dictionary) -> void:
 		map.add_child(a)
 		a.global_transform.origin = carMesh.get_node("SpawnPos").global_transform.origin
 
-func _spawnMine(powerUpEffect) -> void:
+func _spawnMine(powerUpEffect: Dictionary) -> void:
 	var map = get_tree().get_nodes_in_group("World")[0]
 	var a = load("res://Maps/PowerUps/Assets/Mine.tscn").instance()
 	map.add_child(a)
 	a.global_transform.origin = carMesh.get_node("SpawnPos").global_transform.origin
+
+func _spawnRocket(powerUpEffect: Dictionary) -> void:
+	var map = get_tree().get_nodes_in_group("World")[0]
+	var a = load("res://Maps/PowerUps/Assets/Rocket.tscn").instance()
+	map.add_child(a)
+	a._updateTargetPos(carMesh.global_transform.origin + carMesh.global_transform.basis.z.normalized() * 50)
+	a.global_transform.origin = carMesh.get_node("SpawnPos").global_transform.origin
+
+func _boost(powerUpEffect: Dictionary) -> void:
+	var boostDir = -carMesh.global_transform.basis.z.normalized()
+	var boostAmount = powerUpEffect["boostAmount"]
+	ball.add_central_force(boostDir * boostAmount)

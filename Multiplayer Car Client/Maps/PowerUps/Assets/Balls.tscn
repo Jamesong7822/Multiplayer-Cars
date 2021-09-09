@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Maps/PowerUps/Assets/Textures/beachball.png" type="Texture" id=1]
 [ext_resource path="res://Maps/PowerUps/Assets/Balls.gd" type="Script" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
@@ -15,7 +14,12 @@ height = 10.0
 
 [sub_resource type="SpatialMaterial" id=4]
 flags_transparent = true
-albedo_texture = ExtResource( 1 )
+albedo_color = Color( 1, 0.211765, 0.211765, 1 )
+emission_enabled = true
+emission = Color( 1, 0.117647, 0.117647, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
 
 [node name="Balls" type="RigidBody"]
 mass = 10.0

@@ -23,7 +23,7 @@ collision_mask = 3
 physics_material_override = SubResource( 1 )
 gravity_scale = 8.0
 continuous_cd = true
-contacts_reported = 5
+contacts_reported = 3
 contact_monitor = true
 angular_damp = 2.5
 
@@ -50,13 +50,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.456139, 0.10239, 0.495674 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.563749, 0.10239, 0.495674 )
 
 [node name="3DLabel" parent="CarMesh" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 
 [node name="SpawnPos" type="Position3D" parent="CarMesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4 )
 
 [node name="HealthBar" parent="CarMesh" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0 )
 
 [node name="PowerUpHandler" type="Node" parent="."]
 script = ExtResource( 5 )

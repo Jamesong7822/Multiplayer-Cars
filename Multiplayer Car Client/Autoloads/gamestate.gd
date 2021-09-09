@@ -40,7 +40,7 @@ func _player_disconnected(id):
 		else: # Game is not in progress
 			# If we are the server, send to the new dude all the already registered players
 			unregister_player(id)
-			for p_id in players:
+			for p_id in get_tree().get_network_connected_peers():
 				# Erase in the server
 				rpc_id(p_id, "unregister_player", id)
 

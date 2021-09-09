@@ -29,12 +29,7 @@ _data = {
 "World",
 ]]
 script = ExtResource( 7 )
-
-[node name="Camera" type="Camera" parent="."]
-current = true
-far = 1000.0
-script = ExtResource( 1 )
-offset = Vector3( 0, 7, 6 )
+numberPowerUpSpawners = 10
 
 [node name="Players" type="Spatial" parent="."]
 
@@ -90,3 +85,9 @@ curve = SubResource( 3 )
 [node name="PathFollow" type="PathFollow" parent="Path"]
 transform = Transform( 0.0074857, 0, 0.999972, 0, 1, 0, -0.999972, 0, 0.0074857, 4, 50, 0 )
 v_offset = 50.0
+
+[node name="Camera" type="Camera" parent="."]
+current = true
+far = 1000.0
+script = ExtResource( 1 )
+offset = Vector3( 0, 6, 12 )

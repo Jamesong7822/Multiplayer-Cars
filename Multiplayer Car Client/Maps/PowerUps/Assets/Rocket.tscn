@@ -1,0 +1,149 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Maps/PowerUps/Assets/Rocket.gd" type="Script" id=1]
+[ext_resource path="res://Particles/FireParticles.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Particles/SmokeParticles.tscn" type="PackedScene" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.558906
+height = 1.35618
+
+[sub_resource type="SphereShape" id=2]
+radius = 15.0
+
+[sub_resource type="CylinderMesh" id=3]
+top_radius = 0.5
+bottom_radius = 0.5
+height = 1.5
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.945098, 0.341176, 0.341176, 1 )
+
+[sub_resource type="CylinderMesh" id=5]
+top_radius = 0.1
+bottom_radius = 0.5
+height = 0.5
+
+[sub_resource type="Animation" id=6]
+resource_name = "explode"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Particles/SmokeParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles/FireParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Area/CollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "init"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Particles/SmokeParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Particles/FireParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Area/CollisionShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="Rocket" type="KinematicBody"]
+script = ExtResource( 1 )
+acceleration = 100.0
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Area" type="Area" parent="."]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+shape = SubResource( 2 )
+
+[node name="Body" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Body"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Body"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 1 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "init"
+anims/explode = SubResource( 6 )
+anims/init = SubResource( 7 )
+
+[node name="Particles" type="Spatial" parent="."]
+
+[node name="SmokeParticles" parent="Particles" instance=ExtResource( 3 )]
+
+[node name="FireParticles" parent="Particles" instance=ExtResource( 2 )]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

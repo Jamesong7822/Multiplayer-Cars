@@ -20,6 +20,7 @@ func _calcPowerUpSpawners() -> void:
 	var currentOffset = 0
 	for i in range(numberPowerUpSpawners):
 		var a = POWERUP_SPAWNER.instance()
+		a.name = str(i)
 		$PowerUpSpawners.add_child(a)
 		$Path/PathFollow.unit_offset = currentOffset
 		var pos = $Path/PathFollow.global_transform.origin
