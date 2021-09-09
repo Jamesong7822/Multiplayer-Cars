@@ -3,6 +3,8 @@ extends "ws_webrtc_client.gd"
 var rtc_mp : WebRTCMultiplayer = WebRTCMultiplayer.new()
 var sealed = false
 
+signal network_server_connected
+
 func _init():
 	connect("connected", self, "connected")
 	connect("disconnected", self, "disconnected")
@@ -52,6 +54,8 @@ func _offer_created(type : String, data : String, id : int):
 func connected(id : int):
 	print("Connected %d" % id)
 	rtc_mp.initialize(id, true)
+	yield(get_tree(), "idle_frame")
+	emit_signal("network_server_connected")
 
 func lobby_joined(lobby : String):
 	self.lobby = lobby

@@ -47,14 +47,17 @@ func _player_disconnected(id):
 # Callback from SceneTree, only for clients (not server)
 func _connected_ok():
 	# Registration of a client beings here, tell everyone that we are here
-	rpc("register_player", get_tree().get_network_unique_id(), player_name)
+	var playerDict = {}
+	playerDict["name"] = player_name
+	players[get_tree().get_network_unique_id()] = playerDict
+	rpc("register_player", get_tree().get_network_unique_id(), playerDict)
 	emit_signal("connection_succeeded")
 
 # Callback from SceneTree, only for clients (not server)
 func _server_disconnected():
 	print ("Server Disconnected!")
 	emit_signal("game_error", "Server disconnected")
-	end_game()
+	end_game("Server Disconnected!")
 
 # Callback from SceneTree, only for clients (not server)
 func _connected_fail():
@@ -63,24 +66,42 @@ func _connected_fail():
 
 # Lobby management functions
 
-remote func register_player(id, new_player_name):
+func _on_Network_Server_Connected():
+	var playerDict = {}
+	playerDict["name"] = player_name
+	players[get_tree().get_network_unique_id()] = playerDict
+	emit_signal("player_list_changed")
+	
+remote func register_player(id, new_player_info: Dictionary):
 	if get_tree().is_network_server():
+		# server updates truth copy
+		print (players)
+		players[id] = new_player_info
+		print (players)
+		# server broadcasts info to everyone else!
+		for p_id in get_tree().get_network_connected_peers():
+			print (p_id)
+			rpc_id(p_id, "_updateClientPlayersList", players)
 		# If we are the server, let everyone know about the new player
-		rpc_id(id, "register_player", 1, player_name) # Send myself to new dude
-		for p_id in players: # Then, for each remote player
-			rpc_id(id, "register_player", p_id, players[p_id]) # Send player to new dude
-			rpc_id(p_id, "register_player", id, new_player_name) # Send new dude to player
-
-	players[id] = new_player_name
+#		rpc_id(id, "register_player", 1, new_player_info) # Send myself to new dude
+#		for p_id in get_tree().get_network_connected_peers(): # Then, for each remote player
+#			rpc_id(id, "register_player", p_id, players[p_id]) # Send player to new dude
+#			rpc_id(p_id, "register_player", id, new_player_info) # Send new dude to player
+	emit_signal("player_list_changed")
+	
+remote func _updateClientPlayersList(newPlayersList: Dictionary) -> void:
+	if get_tree().get_rpc_sender_id() != 1:
+		return
+	players = newPlayersList
 	emit_signal("player_list_changed")
 
 remote func unregister_player(id):
 	players.erase(id)
 	emit_signal("player_list_changed")
 
-remote func pre_start_game(spawn_points):
+remote func pre_start_game(spawn_points, catcher):
 	# Change scene
-	var world = load("TestWorld.tscn").instance()
+	var world = load("World.tscn").instance()
 	get_tree().get_root().add_child(world)
 
 	get_tree().get_root().get_node("Lobby").hide()
@@ -103,7 +124,12 @@ remote func pre_start_game(spawn_points):
 			world.get_node("Camera").target = player.get_node("CarMesh")
 		else:
 			# Otherwise set name from peer
-			player.set_player_name(players[p_id])
+			player.set_player_name(players[p_id]["name"])
+			
+		# set catcher status
+		if  p_id == catcher:
+			player.isCatcher = true
+			player.set_player_name("Catcher: " + players[p_id]["name"])
 
 		world.get_node("Players").add_child(player)
 
@@ -145,7 +171,7 @@ func join_game(ip, new_player_name, lobby):
 func _signaling_disconnected():
 	if not Client.sealed: # Game has not started yet
 		emit_signal("game_error", "Signaling server disconnected:\n%d: %s" % [Client.code, Client.reason])
-		end_game()
+		end_game("Signaling server disconnected")
 
 func _signaling_inited(lobby):
 	get_tree().set_network_peer(Client.rtc_mp)
@@ -153,32 +179,45 @@ func _signaling_inited(lobby):
 	emit_signal("player_list_changed")
 
 func get_player_list():
-	return players.values()
+	return players
 
 func get_player_name():
 	return player_name
-
+	
+func _chooseCatcher() -> int:
+	if not get_tree().is_network_server():
+		return -1
+	if len(players) > 1:
+		var playersList = players.keys()
+		print (playersList)
+		var catcher = playersList[randi() % len(playersList)]
+		print ("Catcher: ", catcher)
+		return catcher
+	return -1
+	
 func begin_game():
 	assert(get_tree().is_network_server())
 
 	Client.seal_lobby()
 	# Create a dictionary with peer id and respective spawn points, could be improved by randomizing
 	var spawn_points = {}
-	spawn_points[1] = 0 # Server in spawn point 0
-	var spawn_point_idx = 1
+	var spawn_point_idx = 0
+	var catcher = _chooseCatcher()
 	for p in players:
 		spawn_points[p] = spawn_point_idx
 		spawn_point_idx += 1
+			
 	# Call to pre-start game with the spawn points
-	for p in players:
-		rpc_id(p, "pre_start_game", spawn_points)
+	for p in get_tree().get_network_connected_peers():
+		rpc_id(p, "pre_start_game", spawn_points, catcher)
 
-	pre_start_game(spawn_points)
+	pre_start_game(spawn_points, catcher)
 
-func end_game():
-	if has_node("/root/TestWorld"): # Game is in progress
+
+func end_game(reason : String = ""):
+	if has_node("/root/World"): # Game is in progress
 		# End it
-		get_node("/root/TestWorld").queue_free()
+		get_node("/root/World").queue_free()
 
 	emit_signal("game_ended")
 	players.clear()
@@ -188,7 +227,7 @@ func end_game():
 	if has_node("/root/Lobby"):
 		get_node("/root/Lobby").queue_free()
 	# push client back to main menu
-	get_tree().change_scene("res://Menus/MainMenu.tscn")
+	Scenes._returnToMainMenu(reason)
 	
 func _getLatency():
 	if get_tree().get_network_unique_id() == 1:
@@ -211,6 +250,7 @@ func _ready():
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
-
+	
 	Client.connect("lobby_joined", self, "_signaling_inited")
 	Client.connect("disconnected", self, "_signaling_disconnected")
+	Client.connect("network_server_connected", self, "_on_Network_Server_Connected")

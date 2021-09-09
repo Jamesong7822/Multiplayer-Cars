@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Particles/Smoke.gd" type="Script" id=1]
+[ext_resource path="res://Cars/Assets/smoke_09.png" type="Texture" id=2]
 
-[sub_resource type="Gradient" id=5]
-colors = PoolColorArray( 0, 0, 0, 1, 1, 1, 1, 0 )
+[sub_resource type="Gradient" id=8]
+colors = PoolColorArray( 0.561523, 0.561523, 0.561523, 1, 1, 1, 1, 0.423529 )
 
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 5 )
+[sub_resource type="GradientTexture" id=9]
+gradient = SubResource( 8 )
 
 [sub_resource type="Curve" id=3]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
@@ -14,20 +15,27 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 [sub_resource type="CurveTexture" id=4]
 curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticlesMaterial" id=5]
 gravity = Vector3( 0, 0, 0 )
-scale = 0.2
-scale_random = 0.1
+scale = 2.0
+scale_random = 0.5
 scale_curve = SubResource( 4 )
-color_ramp = SubResource( 6 )
+color_ramp = SubResource( 9 )
+hue_variation = 1.0
+hue_variation_random = 0.5
 
-[sub_resource type="SphereMesh" id=2]
+[sub_resource type="SpatialMaterial" id=6]
+flags_transparent = true
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=7]
+material = SubResource( 6 )
 
 [node name="Particles" type="Particles"]
-emitting = false
 amount = 25
 lifetime = 0.5
 local_coords = false
-process_material = SubResource( 1 )
-draw_pass_1 = SubResource( 2 )
+process_material = SubResource( 5 )
+draw_pass_1 = SubResource( 7 )
 script = ExtResource( 1 )

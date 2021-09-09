@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Camera.gd" type="Script" id=1]
+[ext_resource path="res://Maps/Interactables/BoostPad.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Maps/Map.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI/HUD.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/Audio/BGM.mp3" type="AudioStream" id=6]
+[ext_resource path="res://World.gd" type="Script" id=7]
+
+[sub_resource type="ProceduralSky" id=1]
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 1 )
+fog_enabled = true
+fog_depth_end = 600.0
+tonemap_mode = 1
+glow_enabled = true
+glow_strength = 1.5
+glow_bicubic_upscale = true
+
+[sub_resource type="Curve3D" id=3]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0, 0, 0, 0, 135.36, 0, 8.25165, 0, 0, 0, 0, 0, 0, 159.745, 0, 56.2789, 0, 0, 0, 0, 0, 0, 220.928, 0, 67.079, 0, 0, 0, 0, 0, 0, 225.906, 0, 169.607, 0, 0, 0, 0, 0, 0, 304.378, 0, 167.495, 0, 0, 0, 0, 0, 0, 305.703, 0, 52.044, 0, 0, 0, 0, 0, 0, 268.402, 0, 33.1224, 0, 0, 0, 0, 0, 0, 269.102, 0, -65.0982, 0, 0, 0, 0, 0, 0, 311.192, 0, -86.845, 0, 0, 0, 0, 0, 0, 334.783, 0, -156.829, 0, 0, 0, 0, 0, 0, 388.799, 0, -159.284, 0, 0, 0, 0, 0, 0, 428.434, 0, -142.097, 0, 0, 0, 0, 0, 0, 430.18, 0, 120.507, 0, 0, 0, 0, 0, 0, 424.767, 0, 160.803, 0, 0, 0, 0, 0, 0, 401.311, 0, 177.944, 0, 0, 0, 0, 0, 0, 370.939, 0, 171.328, 0, 0, 0, 0, 0, 0, 355.001, 0, 130.13, 0, 0, 0, 0, 0, 0, 355.177, 0, 46.6247, 0, 0, 0, 0, 0, 0, 351.568, 0, -6.90272, 0, 0, 0, 0, 0, 0, 303.153, 0, -12.0149, 0, 0, 0, 0, 0, 0, 234.731, 0, -12.2672, 0, 0, 0, 0, 0, 0, 185.025, 0, -16.9097, 0, 0, 0, 0, 0, 0, 169.388, 0, -41.8692, 0, 0, 0, 0, 0, 0, 178.277, 0, -80.3455, 0, 0, 0, 0, 0, 0, 183.001, 0, -136.528, 0, 0, 0, 0, 0, 0, 184.09, 0, -177.25, 0, 0, 0, 0, 0, 0, 177.061, 0, -214.849, 0, 0, 0, 0, 0, 0, 124.798, 0, -223.618, 0, 0, 0, 0, 0, 0, 57.69, 0, -223.784, 0, 0, 0, 0, 0, 0, -51, 0, -219, 0, 0, 0, 0, 0, 0, -51.9373, 0, -3.90315, 0, 0, 0, 0, 0, 0, 4, 0, 0 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[node name="World" type="Spatial" groups=[
+"World",
+]]
+script = ExtResource( 7 )
+
+[node name="Camera" type="Camera" parent="."]
+current = true
+far = 1000.0
+script = ExtResource( 1 )
+offset = Vector3( 0, 7, 6 )
+
+[node name="Players" type="Spatial" parent="."]
+
+[node name="SpawnPos" type="Spatial" parent="."]
+
+[node name="0" type="Position3D" parent="SpawnPos"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1, -5 )
+
+[node name="1" type="Position3D" parent="SpawnPos"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 1, 5 )
+
+[node name="2" type="Position3D" parent="SpawnPos"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.13948, 1, -4.94295 )
+
+[node name="3" type="Position3D" parent="SpawnPos"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.03904, 1, 5 )
+
+[node name="RaceMap" parent="." instance=ExtResource( 4 )]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -15.0
+autoplay = true
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.15309, 0.985743, -0.0698191, 0.825043, 0.166381, 0.54002, 0.543938, 0.0250677, -0.838751, 21.6705, 37.0474, 0 )
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
+
+[node name="BoostPads" type="Spatial" parent="."]
+
+[node name="BoostPad" parent="BoostPads" instance=ExtResource( 2 )]
+transform = Transform( -8.74228e-08, 0, -1, 0, 1, 0, 2, 0, -4.37114e-08, 301.445, 39.8894, -11.5361 )
+
+[node name="BoostPad2" parent="BoostPads" instance=ExtResource( 2 )]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 1, 428.566, -7.27779, 139.211 )
+
+[node name="BoostPad3" parent="BoostPads" instance=ExtResource( 2 )]
+transform = Transform( 0.0500562, 0.282599, -0.958911, 0.0768641, 0.958231, 0.283401, 1.99789, -0.0439459, 0.0131219, 395.45, 15.7223, 178.414 )
+
+[node name="BoostPad4" parent="BoostPads" instance=ExtResource( 2 )]
+transform = Transform( -1.62762, 0.212373, -0.540931, -0.0335033, 0.921871, 0.387135, 1.16177, 0.324117, -0.746673, 362.689, 32.5192, 163.932 )
+
+[node name="PowerUpSpawners" type="Spatial" parent="."]
+
+[node name="HUD" parent="." instance=ExtResource( 5 )]
+
+[node name="Path" type="Path" parent="."]
+curve = SubResource( 3 )
+
+[node name="PathFollow" type="PathFollow" parent="Path"]
+transform = Transform( 0.0074857, 0, 0.999972, 0, 1, 0, -0.999972, 0, 0.0074857, 4, 50, 0 )
+v_offset = 50.0

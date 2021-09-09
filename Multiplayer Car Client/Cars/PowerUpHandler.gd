@@ -22,8 +22,14 @@ func _grow(powerUpEffect: Dictionary) -> void:
 func _spawnBalls(powerUpEffect: Dictionary) -> void:
 	var map = get_tree().get_nodes_in_group("World")[0]
 	var number = powerUpEffect["number"]
-	var ballScene = load("res://Maps/Interactables/Assets/Balls.tscn")
+	var ballScene = load("res://Maps/PowerUps/Assets/Balls.tscn")
 	for i in range(number):
 		var a = ballScene.instance()
 		map.add_child(a)
-		a.global_transform.origin = ball.global_transform.origin
+		a.global_transform.origin = carMesh.get_node("SpawnPos").global_transform.origin
+
+func _spawnMine(powerUpEffect) -> void:
+	var map = get_tree().get_nodes_in_group("World")[0]
+	var a = load("res://Maps/PowerUps/Assets/Mine.tscn").instance()
+	map.add_child(a)
+	a.global_transform.origin = carMesh.get_node("SpawnPos").global_transform.origin

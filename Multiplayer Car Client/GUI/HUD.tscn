@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI/PowerupHUD.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GUI/Debugger.tscn" type="PackedScene" id=2]
+
+[node name="HUD" type="Node" groups=[
+"HUD",
+]]
+
+[node name="Debugger" parent="." instance=ExtResource( 2 )]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PowerupHUD" parent="." instance=ExtResource( 1 )]
+anchor_left = 1.0
+anchor_bottom = 0.0
+margin_left = -208.0
+margin_bottom = 194.0

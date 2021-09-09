@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Menus/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://Menus/Popup.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Menus/Assets/MainMenu.png" type="Texture" id=3]
 [ext_resource path="res://Menus/MainMenuTheme.tres" type="Theme" id=4]
-[ext_resource path="res://Menus/Assets/HostGame_Button_Normal.png" type="Texture" id=5]
-[ext_resource path="res://Menus/Assets/HostGame_Button_Pressed.png" type="Texture" id=6]
-[ext_resource path="res://Menus/Assets/HostGame_Button_Hover.png" type="Texture" id=7]
-[ext_resource path="res://Menus/Assets/JoinGame_Button_Normal.png" type="Texture" id=8]
-[ext_resource path="res://Menus/Assets/JoinGame_Button_Pressed.png" type="Texture" id=9]
-[ext_resource path="res://Menus/Assets/JoinGame_Button_Hover.png" type="Texture" id=10]
+[ext_resource path="res://Menus/Assets/Buttons/HostGame_Button_Normal.png" type="Texture" id=5]
+[ext_resource path="res://Menus/Assets/Buttons/HostGame_Button_Pressed.png" type="Texture" id=6]
+[ext_resource path="res://Menus/Assets/Buttons/HostGame_Button_Hover.png" type="Texture" id=7]
+[ext_resource path="res://Menus/Assets/Buttons/JoinGame_Button_Normal.png" type="Texture" id=8]
+[ext_resource path="res://Menus/Assets/Buttons/JoinGame_Button_Pressed.png" type="Texture" id=9]
+[ext_resource path="res://Menus/Assets/Buttons/JoinGame_Button_Hover.png" type="Texture" id=10]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -76,6 +77,9 @@ margin_bottom = 135.0
 texture_normal = ExtResource( 8 )
 texture_pressed = ExtResource( 9 )
 texture_hover = ExtResource( 10 )
+
+[node name="Popup" parent="." instance=ExtResource( 2 )]
+visible = false
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonContainer/HostGameButton" to="." method="_on_HostGameButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonContainer/JoinGameButton" to="." method="_on_JoinGameButton_pressed"]

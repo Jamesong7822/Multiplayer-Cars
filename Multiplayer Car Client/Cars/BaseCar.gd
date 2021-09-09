@@ -13,6 +13,9 @@ export (float) var turnSpeed = 5.0
 export (float) var turnStopLimit = 0.75
 export (float) var bodyTilt = 35 # smaller the number the more extreme the tilt
 
+export (int) var maxCarHealth = 100
+export (int) var carDamage = 15
+
 var sphereOffset : Vector3 = Vector3(0,-1.0,0)
 var speedInput = 0.0
 var rotateInput = 0.0
@@ -20,12 +23,26 @@ var respawnInput = false
 var jumpInput = false
 var carMeshOriginalTransform
 
+var powerUp = null # stores the picked up power up function name
+var powerUpArgs = null # stores the picked up power up args
+
+var currentHealth = maxCarHealth
+var isCatcher = false
+var playerName
+
 func _ready() -> void:
 	pass
+	_setup()
+		
+func _setup() -> void:
 	carMeshOriginalTransform = carMesh.global_transform
 	if name != str(get_tree().get_network_unique_id()):
 		# disable the physics for car that is not urs
 		$Ball.mode = RigidBody.MODE_KINEMATIC
+		
+	# start the health bar
+	$CarMesh/HealthBar._setProgressBarMaxValue(maxCarHealth)
+	$CarMesh/HealthBar._setProgressBarValue(currentHealth)
 
 func _physics_process(delta: float) -> void:
 	ball.add_central_force(-carMesh.global_transform.basis.z * speedInput)
@@ -36,15 +53,22 @@ func _physics_process(delta: float) -> void:
 	# respawn if necessary
 	if ball.global_transform.origin.y < - 50:
 		_respawn()
-	# broadcast your own transform to other connected peers
-	if name == str(get_tree().get_network_unique_id()):
-		for playerID in get_tree().get_network_connected_peers():
-			rpc_id(playerID, "sendTransformToClients", ball.global_transform, carMesh.global_transform)
 
 func _process(delta: float) -> void:
 	_renderSmokeParticles()
+	$CarMesh/HealthBar._setProgressBarValue(currentHealth)
 	# check if network master
 	if is_network_master():
+		# check for respawn input
+		respawnInput = false
+		if Input.is_action_just_pressed("respawn"):
+			respawnInput = true
+		if respawnInput:
+			_respawn()
+		# check for left click input
+		if Input.is_action_just_pressed("left_click"):
+			if powerUp:
+				rpc("_usePowerUp")
 		# cannot steer / drive when in air
 		if not groundRaycast.is_colliding():
 			return
@@ -61,18 +85,16 @@ func _process(delta: float) -> void:
 		# change rotateinput to -ve for reversing
 		if speedInput < 0:
 			rotateInput = -rotateInput
-		# check for respawn input
-		respawnInput = false
-		if Input.is_action_just_pressed("respawn"):
-			respawnInput = true
+		
 		
 		# check for jump input
 		jumpInput = false
 		if Input.is_action_just_pressed("space"):
 			jumpInput = true
+			
+		
 
-	if respawnInput:
-		_respawn()
+	
 	if jumpInput:
 		_jump()
 	
@@ -98,9 +120,10 @@ func alignWithY(xform:Transform, newY:Vector3):
 	xform.basis = xform.basis.orthonormalized()
 	return xform
 	
-func set_player_name(playerName: String) -> void:
+func set_player_name(newPlayerName: String) -> void:
 	pass
-	$"CarMesh/3DLabel"._setLabelText(playerName)
+	$"CarMesh/3DLabel"._setLabelText(newPlayerName)
+	playerName = newPlayerName
 	
 func _renderSmokeParticles() -> void:
 	# add smoke effect
@@ -116,14 +139,39 @@ func _respawn() -> void:
 	carMesh.global_transform = carMeshOriginalTransform
 	
 func _jump() -> void:
-	ball.add_central_force(Vector3.UP * 1500)
-	ball.linear_velocity = ball.linear_velocity * 0.7
+	ball.add_central_force(Vector3.UP * 2000)
+	ball.linear_velocity = ball.linear_velocity * 0.5
+	$Ball/JumpAudio.play()
 	
 func _boost(boostDir: Vector3, boostAmount: float) -> void:
 	ball.add_central_force(boostDir * boostAmount)
-
+	
+remotesync func _usePowerUp():
+	# use power up
+	$PowerUpHandler.call(powerUp,powerUpArgs)
+	# remove the power up from variable
+	powerUp = null
+	powerUpArgs = null
+	# remove from the HUD
+	var HUD = get_tree().get_nodes_in_group("HUD")[0]
+	HUD.get_node("PowerupHUD")._clearPowerupTexture()
+	
 remote func sendTransformToClients(ballGlobalTransform: Transform, carMeshGlobalTransform: Transform) -> void:
 	# update the corresponding transform on client side
-	ball.global_transform = ball.global_transform.interpolate_with(ballGlobalTransform, 0.2)
-	carMesh.global_transform = carMesh.global_transform.interpolate_with(carMeshGlobalTransform, 0.2)
+	ball.global_transform = ball.global_transform.interpolate_with(ballGlobalTransform, 0.5)
+	carMesh.global_transform = carMesh.global_transform.interpolate_with(carMeshGlobalTransform, 0.5)
 
+func _on_NetworkTimer_timeout() -> void:
+	# broadcast your own transform to other connected peers
+	if is_network_master():
+		for playerID in get_tree().get_network_connected_peers():
+			rpc_id(playerID, "sendTransformToClients", ball.global_transform, carMesh.global_transform)
+
+remotesync func _gotCaught(damage: int) -> void:
+	currentHealth -= damage
+
+func _on_Ball_body_entered(body: Node) -> void:
+	pass # Replace with function body.
+	if body.is_in_group("Car"):
+		if body.get_parent().isCatcher:
+			rpc("_gotCaught", body.get_parent().carDamage)

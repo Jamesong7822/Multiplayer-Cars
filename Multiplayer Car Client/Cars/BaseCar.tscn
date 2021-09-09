@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Cars/SUV/suv.glb" type="PackedScene" id=1]
 [ext_resource path="res://Cars/BaseCar.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Particles/Smoke.tscn" type="PackedScene" id=3]
 [ext_resource path="res://GUI/3DLabel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Cars/PowerUpHandler.gd" type="Script" id=5]
+[ext_resource path="res://Cars/Assets/Audio/Jump.wav" type="AudioStream" id=6]
+[ext_resource path="res://GUI/3DProgressBar.tscn" type="PackedScene" id=7]
 
 [sub_resource type="PhysicsMaterial" id=1]
 
@@ -21,10 +23,16 @@ collision_mask = 3
 physics_material_override = SubResource( 1 )
 gravity_scale = 8.0
 continuous_cd = true
+contacts_reported = 5
+contact_monitor = true
 angular_damp = 2.5
 
 [node name="CollisionShape" type="CollisionShape" parent="Ball"]
 shape = SubResource( 2 )
+
+[node name="JumpAudio" type="AudioStreamPlayer3D" parent="Ball"]
+stream = ExtResource( 6 )
+unit_size = 5.0
 
 [node name="CarMesh" type="Spatial" parent="."]
 
@@ -42,9 +50,22 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.456139, 0.10239, 0.495674 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.563749, 0.10239, 0.495674 )
 
 [node name="3DLabel" parent="CarMesh" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+
+[node name="SpawnPos" type="Position3D" parent="CarMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4 )
+
+[node name="HealthBar" parent="CarMesh" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
 [node name="PowerUpHandler" type="Node" parent="."]
 script = ExtResource( 5 )
+
+[node name="NetworkTimer" type="Timer" parent="."]
+wait_time = 0.033
+autostart = true
+
+[connection signal="body_entered" from="Ball" to="." method="_on_Ball_body_entered"]
+[connection signal="timeout" from="NetworkTimer" to="." method="_on_NetworkTimer_timeout"]
 
 [editable path="CarMesh/Car"]

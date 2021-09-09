@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Menus/JoinGame.gd" type="Script" id=1]
-[ext_resource path="res://Menus/MenusTheme.tres" type="Theme" id=2]
+[ext_resource path="res://Menus/MainMenuTheme.tres" type="Theme" id=2]
+[ext_resource path="res://Menus/Assets/Buttons/JoinGame_Button_Hover.png" type="Texture" id=3]
+[ext_resource path="res://Menus/Assets/Buttons/JoinGame_Button_Normal.png" type="Texture" id=4]
+[ext_resource path="res://Menus/Assets/Buttons/JoinGame_Button_Pressed.png" type="Texture" id=5]
+[ext_resource path="res://Menus/Popup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Menus/Assets/Buttons/Back_Button_Normal.png" type="Texture" id=7]
+[ext_resource path="res://Menus/Assets/Buttons/Back_Button_Pressed.png" type="Texture" id=8]
+[ext_resource path="res://Menus/Assets/Buttons/Back_Button_Hover.png" type="Texture" id=9]
 
 [node name="JoinGame" type="Control"]
 anchor_right = 1.0
@@ -31,16 +38,17 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 450.0
-margin_top = 276.0
-margin_right = 573.0
-margin_bottom = 324.0
+margin_left = 261.0
+margin_top = 216.0
+margin_right = 763.0
+margin_bottom = 384.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+custom_constants/separation = 15
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_right = 123.0
-margin_bottom = 24.0
+margin_right = 502.0
+margin_bottom = 93.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 __meta__ = {
@@ -49,22 +57,43 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_top = 5.0
-margin_right = 61.0
-margin_bottom = 19.0
+margin_right = 284.0
+margin_bottom = 88.0
+theme = ExtResource( 2 )
 text = "Lobby ID:"
 
 [node name="LineEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 65.0
-margin_right = 123.0
-margin_bottom = 24.0
+margin_left = 288.0
+margin_right = 502.0
+margin_bottom = 93.0
+theme = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="JoinButton" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 28.0
-margin_right = 123.0
-margin_bottom = 48.0
-text = "Join"
+[node name="JoinGameButton" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+margin_left = 126.0
+margin_top = 108.0
+margin_right = 376.0
+margin_bottom = 168.0
+size_flags_horizontal = 6
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 3 )
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/JoinButton" to="." method="_on_JoinButton_pressed"]
+[node name="BackButton" type="TextureButton" parent="MarginContainer"]
+margin_left = 20.0
+margin_top = 520.0
+margin_right = 270.0
+margin_bottom = 580.0
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 8 )
+texture_hover = ExtResource( 9 )
+
+[node name="Popup" parent="." instance=ExtResource( 6 )]
+visible = false
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/JoinGameButton" to="." method="_on_JoinGameButton_pressed"]
+[connection signal="pressed" from="MarginContainer/BackButton" to="." method="_on_BackButton_pressed"]
